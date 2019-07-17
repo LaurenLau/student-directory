@@ -15,12 +15,12 @@ def print_header
   puts "----------------"
 end
 
-# Puts student name start with specific letter
+# Rewriting each method using loops
 def each(names)
-  names.each.with_index do |student, index| 
-    if student[:name].delete(" ").length < 12
-    puts "#{index+1}. #{student[:name]}: #{student[:cohort].capitalize} cohort"
-    end 
+  i = 0
+  while i <= 10 do
+  puts "#{i+1}. #{names[i][:name]}: #{names[i][:cohort]} cohort"
+    i += 1 
   end
 end
 
