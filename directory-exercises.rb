@@ -15,10 +15,12 @@ def print_header
   puts "----------------"
 end
 
-# Number added before each name
+# Puts student name start with specific letter
 def each(names)
   names.each.with_index do |student, index| 
+    if student[:name].start_with? "T"
     puts "#{index+1}. #{student[:name]}: #{student[:cohort].capitalize} cohort"
+    end 
   end
 end
 
