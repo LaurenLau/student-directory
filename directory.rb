@@ -6,7 +6,8 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
-  puts "4. Exit"
+  puts "4. Load the list from students.csv"
+  puts "5. Exit"
 end
 
 def input_students
@@ -59,6 +60,18 @@ def save_students
   }
   file.close
 end
+
+def load_students
+  # Opens file for reading
+  file = File.open("students.csv", "r")
+  # Iterates through each line of file 
+  file.readlines.each { |line|
+  name, cohort = line.chomp.split(", ")
+  # Adds each line back into array as a hash
+    @students << {name: name, cohort: cohort.to_sym}
+  }
+  file.close
+end
 # Selects a process based on user input
 def process(selection)
     case selection
@@ -66,9 +79,11 @@ def process(selection)
         input_students
       when "2"
         show_students
-      when "4"
-        save_students
       when "3"
+        save_students
+      when "4"
+        load_students
+      when "5"
         exit
       else
         puts "Please try again."
