@@ -13,14 +13,14 @@ end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  name = gets.chomp
+  name = STDIN.gets.chomp
     # While user input is not empty, loop through this code
   while !name.empty? do
     # Add student name to array
     @students << {name: name, cohort: :november}
     puts "Now we have #{@students.count} students"
     # Get another name from user. If empty, loop breaks
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
   # Return the array
   @students
@@ -61,9 +61,9 @@ def save_students
   file.close
 end
 
-def load_students
+def load_students(filename = "students.csv")
   # Opens file for reading
-  file = File.open("students.csv", "r")
+  file = File.open(filename, "r")
   # Iterates through each line of file 
   file.readlines.each { |line|
   name, cohort = line.chomp.split(", ")
@@ -71,6 +71,19 @@ def load_students
     @students << {name: name, cohort: cohort.to_sym}
   }
   file.close
+end
+
+def try_load_students
+  # First argument from command line
+  filename = ARGV.first
+  return if filename.nil? 
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
 end
 # Selects a process based on user input
 def process(selection)
@@ -93,9 +106,12 @@ end
 def interactive_menu 
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
+
+
+try_load_students
 # Calls current method
 interactive_menu
  
